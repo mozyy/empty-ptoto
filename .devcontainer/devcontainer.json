@@ -10,6 +10,8 @@
 			// Options
 			"INSTALL_NODE": "false",
 			"NODE_VERSION": "lts/*",
+			"HTTP_PROXY": "${localEnv:proxy_addr}",
+			"HTTPS_PROXY": "${localEnv:proxy_addr}"
 		}
 	},
 	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
