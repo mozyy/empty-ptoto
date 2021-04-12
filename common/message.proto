@@ -1,0 +1,22 @@
+syntax="proto3";
+
+package message;
+
+
+option go_package = "empty-news/proto;message";
+
+// service MessageService {
+//   rpc Message() returns () {}
+// }
+
+message Message {
+	Status state = 1;
+	string message = 2;
+}
+
+enum Status {
+  Success = 0;
+	Info = 1;
+	Warning = 2;
+	Error = 3;
+}

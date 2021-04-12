@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package empty;
+
+option go_package = "empty-news/proto;news";
+
+service Empty {
+	rpc News(google.protobuf.Empty) returns (stream NewsItem) {}
+	rpc NewsList(google.protobuf.Empty) returns (NewsResponse) {}
+	// rpc List(ListRequest) returns (ListResponse) {}
+
+	rpc Call(Request) returns (Response) {}
+	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
+	rpc PingPong(stream Ping) returns (stream Pong) {}
+}
+
+message NewsItem {
+	string link = 1;
+	string image = 2; //
+	string title = 3;
+	string time = 4;
+	int32 view = 5;
+	int32 comment = 6;
+	string type = 7; // 1: 业界, 2: 科学, 3: 影视, 4: 游戏
+}
+
+message NewsResponse {
+	repeated NewsItem list = 1;
+}
+message ListRequest {
+	string name = 1;
+}
+
+message ListResponse {
+	string msg = 1;
+}
+
+
+message Message {
+	string say = 1;
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+}
+
+message StreamingRequest {
+	int64 count = 1;
+}
+
+message StreamingResponse {
+	int64 count = 1;
+}
+
+message Ping {
+	int64 stroke = 1;
+}
+
+message Pong {
+	int64 stroke = 1;
+}
+
