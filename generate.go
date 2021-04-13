@@ -4,26 +4,27 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 )
 
 //go:generate go run $GOFILE
-
-const (
-	goOutPath  = "./submodules"
-	webOutPath = "./submodules/empty-frontend/src/proto"
-)
 
 func main() {
 	dir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
-	err = filepath.Walk(dir, func(p string, info os.FileInfo, err error) error {
+
+	goOutPath := path.Join(dir, "submodules")
+	webOutPath := path.Join(dir, "submodules", "empty-frontend", "src", "proto")
+	protoPath := path.Join(dir, "proto")
+
+	err = filepath.Walk(protoPath, func(p string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-		relPath, err := filepath.Rel(dir, p)
+		relPath, err := filepath.Rel(protoPath, p)
 		if err != nil {
 			return err
 		}
@@ -47,7 +48,7 @@ func main() {
 				relPath,
 			}
 			cmd := exec.Command("protoc", args...)
-			cmd.Dir = dir
+			cmd.Dir = protoPath
 			out, err := cmd.CombinedOutput()
 			if err != nil {
 				fmt.Printf("protoc [%s] error: %s, out: \n%s\n%s\n", relPath, err, out, args)
