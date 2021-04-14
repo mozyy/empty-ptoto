@@ -2,10 +2,19 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 
-package empty;
+package news;
 
-option go_package = "empty-news/proto;news";
+option go_package = "empty-news/proto/news;news";
 
+service News {
+	rpc News(google.protobuf.Empty) returns (stream NewsItem) {}
+	rpc NewsList(google.protobuf.Empty) returns (NewsResponse) {}
+	// rpc List(ListRequest) returns (ListResponse) {}
+
+	rpc Call(Request) returns (Response) {}
+	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
+	rpc PingPong(stream Ping) returns (stream Pong) {}
+}
 service Empty {
 	rpc News(google.protobuf.Empty) returns (stream NewsItem) {}
 	rpc NewsList(google.protobuf.Empty) returns (NewsResponse) {}
