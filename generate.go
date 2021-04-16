@@ -17,7 +17,9 @@ func main() {
 	}
 
 	goOutPath := path.Join(dir, "submodules")
-	webOutPath := path.Join(dir, "submodules", "empty-frontend", "src", "proto")
+	webOutPath := path.Join(dir, "submodules/empty-frontend/src/proto")
+	openApiOutPath := path.Join(dir, "submodules/empty-frontend/src/openapi")
+
 	protoPath := path.Join(dir, "proto")
 
 	err = filepath.Walk(protoPath, func(p string, info os.FileInfo, err error) error {
@@ -45,6 +47,9 @@ func main() {
 				// js
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webOutPath),
 				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s", webOutPath),
+				// openapi
+				fmt.Sprintf("--openapi_out=%s", openApiOutPath),
+
 				relPath,
 			}
 			cmd := exec.Command("protoc", args...)

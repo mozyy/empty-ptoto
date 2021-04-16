@@ -31,7 +31,8 @@ ENV GO111MODULE on
 
 RUN go get github.com/golang/protobuf/proto && \
     go get github.com/golang/protobuf/protoc-gen-go && \
-    go get github.com/micro/micro/v3/cmd/protoc-gen-micro
+    go get github.com/micro/micro/v3/cmd/protoc-gen-micro && \
+    go get github.com/micro/micro/v3/cmd/protoc-gen-openapi
 
 # ENV GOPROXY=https://goproxy.cn,direct
 
@@ -49,7 +50,7 @@ RUN curl -L -o /usr/local/bin/protoc-gen-grpc-web https://github.com/grpc/grpc-w
     chmod +x /usr/local/bin/protoc-gen-grpc-web
 
 
-RUN git clone --depth 1 https://github.com/googleapis/googleapis.git $GOPATH/src/github.com/googleapis/googleapis
+# RUN git clone --depth 1 https://github.com/googleapis/googleapis.git $GOPATH/src/github.com/googleapis/googleapis
 
 # ENV PATH="$PATH:~/.local/bin"
 
