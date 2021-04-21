@@ -5,11 +5,19 @@ package news;
 option go_package = "empty-news/proto/news;news";
 
 service News {
+	rpc Hello(HelloRequest) returns (HelloResponse) {}
 	rpc News(EmptyMsg) returns (stream NewsItem) {}
 	rpc NewsList(EmptyMsg) returns (NewsResponse) {}
 }
 
 message EmptyMsg {}
+
+message HelloRequest {
+	string name = 1;
+}
+message HelloResponse {
+	string name = 1;
+}
 
 message NewsItem {
 	string link = 1;
