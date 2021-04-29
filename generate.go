@@ -46,7 +46,7 @@ func main() {
 				// fmt.Sprintf("--go_out=plugins=micro:%s", goOutPath),
 				// js
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webOutPath),
-				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcweb:%s", webOutPath),
+				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s", webOutPath),
 				// openapi
 				fmt.Sprintf("--openapi_out=%s", openApiOutPath),
 
