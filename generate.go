@@ -48,7 +48,7 @@ func main() {
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webOutPath),
 				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s", webOutPath),
 				// openapi
-				fmt.Sprintf("--openapi_out=%s", openApiOutPath),
+				// fmt.Sprintf("--openapi_out=%s", openApiOutPath),
 
 				relPath,
 			}
