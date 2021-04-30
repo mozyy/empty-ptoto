@@ -1,23 +1,16 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 package news;
 
 option go_package = "empty-news/proto/news;news";
 
 service News {
-	rpc Hello(HelloRequest) returns (HelloResponse) {}
-	rpc News(EmptyMsg) returns (stream NewsItem) {}
-	rpc NewsList(EmptyMsg) returns (NewsResponse) {}
+	 rpc List(google.protobuf.Empty) returns (ListResponse) {}
+	 rpc Detail(DetailRequest) returns (DetailResponse) {}
 }
 
-message EmptyMsg {}
-
-message HelloRequest {
-	string name = 1;
-}
-message HelloResponse {
-	string name = 1;
-}
 
 message NewsItem {
 	string link = 1;
@@ -29,13 +22,22 @@ message NewsItem {
 	string type = 7; // 1: 业界, 2: 科学, 3: 影视, 4: 游戏
 }
 
-message NewsResponse {
+message ListResponse {
 	repeated NewsItem list = 1;
 }
-message ListRequest {
-	string name = 1;
+message DetailRequest {
+	string url = 1;
 }
 
-message ListResponse {
-	string msg = 1;
+message DetailContent {
+	int32 type = 1;
+	string content = 2;
+}
+
+message DetailResponse {
+	string title = 1;
+	string from = 2;
+	string time = 3;
+	string summary = 4;
+	repeated DetailContent content = 5;
 }

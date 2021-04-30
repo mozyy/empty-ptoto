@@ -36,7 +36,7 @@ func main() {
 			args := []string{
 				"--proto_path=./",
 				fmt.Sprintf("--proto_path=%s/.local/include", os.Getenv("HOME")),
-				fmt.Sprintf("--proto_path=%s/src/github.com/googleapis/googleapis", os.Getenv("GOPATH")),
+				// fmt.Sprintf("--proto_path=%s/src/github.com/googleapis/googleapis", os.Getenv("GOPATH")),
 				// 分开写会生成两个文件, 下面的写一起只生成一个文件 ,
 				// 下面的import的context是golang.org/x/net/context, 以被内部context取代,
 				// 所以用上面的
