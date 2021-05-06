@@ -18,7 +18,7 @@ func main() {
 
 	goOutPath := path.Join(dir, "submodules")
 	webOutPath := path.Join(dir, "submodules/empty-frontend/src/proto")
-	openApiOutPath := path.Join(dir, "submodules/empty-frontend/src/openapi")
+	// openApiOutPath := path.Join(dir, "submodules/empty-frontend/src/openapi")
 
 	protoPath := path.Join(dir, "proto")
 

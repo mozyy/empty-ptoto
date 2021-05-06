@@ -8,6 +8,7 @@ option go_package = "empty-news/proto/news;news";
 
 service News {
 	 rpc List(google.protobuf.Empty) returns (ListResponse) {}
+	 rpc Category(google.protobuf.Empty) returns (CategoryResponse) {}
 	 rpc Detail(DetailRequest) returns (DetailResponse) {}
 }
 
@@ -25,16 +26,23 @@ message NewsItem {
 message ListResponse {
 	repeated NewsItem list = 1;
 }
+
+message CategoryResponse {
+	message CategoryItem {
+		string type = 1;
+		repeated NewsItem list = 2;
+	}
+	repeated CategoryItem categorys = 1;
+}
 message DetailRequest {
 	string URL = 1;
 }
 
-message DetailContent {
-	int32 type = 1;
-	string content = 2;
-}
-
 message DetailResponse {
+	message DetailContent {
+		int32 type = 1;
+		string content = 2;
+	}
 	string title = 1;
 	string from = 2;
 	string time = 3;
