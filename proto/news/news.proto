@@ -4,12 +4,11 @@ import "google/protobuf/empty.proto";
 
 package news;
 
-option go_package = "empty-news/proto/news;news";
+option go_package = "empty-news/proto/pbnews;pbnews";
 
 service News {
-	 rpc List(google.protobuf.Empty) returns (ListResponse) {}
-	 rpc Category(google.protobuf.Empty) returns (CategoryResponse) {}
-	 rpc Detail(DetailRequest) returns (DetailResponse) {}
+	rpc List(google.protobuf.Empty) returns (ListResponse) {}
+	rpc Detail(DetailRequest) returns (DetailResponse) {}
 }
 
 
@@ -27,13 +26,6 @@ message ListResponse {
 	repeated NewsItem list = 1;
 }
 
-message CategoryResponse {
-	message CategoryItem {
-		string type = 1;
-		repeated NewsItem list = 2;
-	}
-	repeated CategoryItem categorys = 1;
-}
 message DetailRequest {
 	string URL = 1;
 }

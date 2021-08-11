@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package sms;
+
+option go_package = "empty-news/proto/pbsms;pbsms";
+
+service SMS {
+	rpc Send(SendRequest) returns (google.protobuf.Empty) {}
+	rpc Validation(ValidationRequest) returns (google.protobuf.Empty) {}
+}
+
+
+
+message SendRequest {
+	string mobile = 1;
+}
+
+message ValidationRequest {
+	string mobile = 1;
+	string code = 2;
+}

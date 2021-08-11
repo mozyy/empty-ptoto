@@ -10,14 +10,17 @@ import (
 
 //go:generate go run $GOFILE
 
+// const modulesPath = "submodules"
+const modulesPath = "../"
+
 func main() {
 	dir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	goOutPath := path.Join(dir, "submodules")
-	webOutPath := path.Join(dir, "submodules/empty-frontend/src/proto")
+	goOutPath := path.Join(dir, modulesPath)
+	webOutPath := path.Join(dir, modulesPath, "empty-frontend/src/proto")
 	// openApiOutPath := path.Join(dir, "submodules/empty-frontend/src/openapi")
 
 	protoPath := path.Join(dir, "proto")
