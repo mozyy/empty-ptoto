@@ -1,0 +1,23 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package model;
+
+option go_package = "github.com/mozyy/empty-news/proto/pbmodel;pbmodel";
+
+message OAuthToken {
+	string access_token = 1;
+	string token_type = 2;
+	string refresh_token = 3;
+}
+
+
+message OAuthClient {
+	uint32 ID = 1;
+	google.protobuf.Timestamp created_at = 2;
+	google.protobuf.Timestamp updated_at = 3;
+	google.protobuf.Timestamp deleted_at = 4;
+	string secret = 5;
+	string domain = 6;
+	string user_ID = 7;
+}

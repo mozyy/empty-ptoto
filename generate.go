@@ -20,8 +20,12 @@ func main() {
 	}
 
 	goOutPath := path.Join(dir, modulesPath)
-	webOutPath := path.Join(dir, modulesPath, "empty-frontend/src/proto")
+	webOutPath := path.Join(dir, modulesPath, "empty-frontend/src")
 	// openApiOutPath := path.Join(dir, "submodules/empty-frontend/src/openapi")
+	os.RemoveAll(path.Join(goOutPath, "empty-news/proto"))
+	os.MkdirAll(path.Join(goOutPath, "empty-news/proto"), os.ModeDir)
+	os.RemoveAll(path.Join(webOutPath, "proto"))
+	os.MkdirAll(path.Join(webOutPath, "proto"), os.ModeDir)
 
 	protoPath := path.Join(dir, "proto")
 
@@ -29,7 +33,7 @@ func main() {
 		if err != nil {
 			return err
 		}
-		relPath, err := filepath.Rel(protoPath, p)
+		relPath, err := filepath.Rel(dir, p)
 		if err != nil {
 			return err
 		}
@@ -45,7 +49,7 @@ func main() {
 				// 所以用上面的
 
 				// fmt.Sprintf("--micro_out=%s", goOutPath),
-				fmt.Sprintf("--go_out=plugins=grpc:%s", goOutPath),
+				fmt.Sprintf("--go_out=plugins=grpc,module=github.com/mozyy:%s", goOutPath),
 				// fmt.Sprintf("--go_out=plugins=micro:%s", goOutPath),
 				// js
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webOutPath),
@@ -56,7 +60,7 @@ func main() {
 				relPath,
 			}
 			cmd := exec.Command("protoc", args...)
-			cmd.Dir = protoPath
+			cmd.Dir = dir
 			out, err := cmd.CombinedOutput()
 			if err != nil {
 				fmt.Printf("protoc [%s] error: %s, out: \n%s\n%s\n", relPath, err, out, args)

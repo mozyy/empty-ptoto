@@ -1,8 +1,0 @@
-[submodule "submodules/empty-frontend"]
-	path = submodules/empty-frontend
-	url = https://github.com/mozyy/empty-frontend.git
-	branch = main
-[submodule "submodules/empty-news"]
-	path = submodules/empty-news
-	url = https://github.com/mozyy/empty-news.git
-	branch = main

@@ -50,6 +50,8 @@ RUN curl -L -o /usr/local/bin/protoc-gen-grpc-web https://github.com/grpc/grpc-w
     chmod +x /usr/local/bin/protoc-gen-grpc-web
 
 
+RUN go get github.com/infobloxopen/protoc-gen-gorm
+
 # RUN git clone --depth 1 https://github.com/googleapis/googleapis.git $GOPATH/src/github.com/googleapis/googleapis
 
 # ENV PATH="$PATH:~/.local/bin"

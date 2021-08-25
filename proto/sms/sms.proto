@@ -4,7 +4,7 @@ import "google/protobuf/empty.proto";
 
 package sms;
 
-option go_package = "empty-news/proto/pbsms;pbsms";
+option go_package = "github.com/mozyy/empty-news/proto/pbsms;pbsms";
 
 service SMS {
 	rpc Send(SendRequest) returns (google.protobuf.Empty) {}

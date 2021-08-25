@@ -4,7 +4,7 @@ import "google/protobuf/empty.proto";
 
 package news;
 
-option go_package = "empty-news/proto/pbnews;pbnews";
+option go_package = "github.com/mozyy/empty-news/proto/pbnews;pbnews";
 
 service News {
 	rpc List(google.protobuf.Empty) returns (ListResponse) {}

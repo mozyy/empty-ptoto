@@ -3,7 +3,7 @@ syntax="proto3";
 package message;
 
 
-option go_package = "empty-news/proto/message;message";
+option go_package = "github.com/mozyy/empty-news/proto/message;message";
 
 // service MessageService {
 //   rpc Message() returns () {}
