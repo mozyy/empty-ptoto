@@ -54,7 +54,8 @@ func main() {
 				// 所以用上面的
 
 				// fmt.Sprintf("--micro_out=%s", goOutPath),
-				fmt.Sprintf("--go_out=plugins=grpc,module=github.com/mozyy:%s", goOutPath),
+				// fmt.Sprintf("--go_out=plugins=grpc,module=github.com/mozyy:%s", goOutPath),
+				fmt.Sprintf("--gogo_out=:%s", "."),
 				// fmt.Sprintf("--go_out=plugins=micro:%s", goOutPath),
 				// js
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webOutPath),
