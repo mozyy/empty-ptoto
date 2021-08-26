@@ -10,6 +10,7 @@ message OAuthToken {
 	string access_token = 1;
 	string token_type = 2;
 	string refresh_token = 3;
+	double expires_seconds = 4;
 }
 
 
