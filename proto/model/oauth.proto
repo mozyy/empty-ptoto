@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "google/protobuf/timestamp.proto";
+import "gorm/options/gorm.proto";
 
 package model;
 
@@ -13,7 +14,8 @@ message OAuthToken {
 
 
 message OAuthClient {
-	uint32 ID = 1;
+	option (gorm.opts).ormable = true;
+	uint32 id = 1 [(gorm.field).tag = {primary_key: true}];
 	google.protobuf.Timestamp created_at = 2;
 	google.protobuf.Timestamp updated_at = 3;
 	google.protobuf.Timestamp deleted_at = 4;

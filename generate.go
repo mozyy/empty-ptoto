@@ -1,17 +1,22 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
+
+	"github.com/moby/moby/daemon/graphdriver/copy"
 )
 
 //go:generate go run $GOFILE
 
 // const modulesPath = "submodules"
 const modulesPath = "../"
+
+var useGorm = flag.Bool("gorm", false, "use gorm gen")
 
 func main() {
 	dir, err := os.Getwd()
@@ -57,8 +62,14 @@ func main() {
 				// openapi
 				// fmt.Sprintf("--openapi_out=%s", openApiOutPath),
 
-				relPath,
+				// relPath,
 			}
+			if *useGorm {
+				args = append(args,
+					// TODO: 先生成到 ./github.com/mozyy/empty-news, 再用脚本复制过去
+					fmt.Sprintf("--gorm_out=:%s", "."))
+			}
+			args = append(args, relPath)
 			cmd := exec.Command("protoc", args...)
 			cmd.Dir = dir
 			out, err := cmd.CombinedOutput()
@@ -72,5 +83,13 @@ func main() {
 	})
 	if err != nil {
 		panic(err)
+	}
+	if *useGorm {
+		err := copy.DirCopy(path.Join(dir, "./github.com/mozyy/empty-news/proto"),
+			path.Join(dir, "../empty-news/proto"), copy.Content, false)
+		os.RemoveAll(path.Join(dir, "github.com"))
+		if err != nil {
+			panic(err)
+		}
 	}
 }
