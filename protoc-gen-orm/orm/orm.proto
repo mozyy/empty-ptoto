@@ -2,16 +2,16 @@ syntax = "proto3";
 
 package orm;
 
-option go_package = "github.com/mozyy/empty-news/proto;orm";
+option go_package = "protoc.yyue.dev/protoc-gen-orm/orm;orm";
 
 import "google/protobuf/descriptor.proto";
 
-// TODO: The option number 52119 lies within the internally reserved extension
+// TODO: The option number 52120 lies within the internally reserved extension
 // range. I believe a publicly unique number should be requested.
 
 // Currently no file options
 extend google.protobuf.FileOptions {
-  OrmFileOptions file_opts = 52119;
+  OrmFileOptions file_opts = 52120;
 }
 
 message OrmFileOptions {
@@ -20,7 +20,7 @@ message OrmFileOptions {
 // Validation rules applied at the message level
 extend google.protobuf.MessageOptions {
     // ormable will cause orm code to be generated for this message/object
-    OrmMessageOptions opts = 52119;
+    optional bool ormable = 52120;
 }
 
 message OrmMessageOptions {
@@ -39,7 +39,7 @@ message ExtraField {
 
 // Field level specifications
 extend google.protobuf.FieldOptions {
-    OrmFieldOptions field = 52119;
+    OrmFieldOptions field = 52120;
 }
 
 message OrmFieldOptions {
@@ -136,7 +136,7 @@ message ManyToManyOptions {
 
 // To be used in (leiu of) the interceptor
 extend google.protobuf.ServiceOptions {
-  AutoServerOptions server = 52119;
+  AutoServerOptions server = 52120;
 }
 
 message AutoServerOptions {
@@ -146,7 +146,7 @@ message AutoServerOptions {
 }
 
 extend google.protobuf.MethodOptions {
-  MethodOptions method = 52119;
+  MethodOptions method = 52120;
 }
 
 message MethodOptions {

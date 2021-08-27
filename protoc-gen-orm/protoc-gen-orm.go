@@ -8,8 +8,9 @@ import (
 )
 
 func main() {
-	o := &oorm.Orm{}
-	response := command.GeneratePlugin(command.Read(), o, ".pb.gorm.go")
+	response := command.GeneratePlugin(command.Read(), &oorm.Orm{}, ".pb.orm.go")
+	command.Write(response)
+	response = command.GeneratePlugin(command.Read(), &oorm.Oorm{}, ".pb.oorm.go")
 	if len(response.String()) == 0 {
 		log.Printf("empty response")
 	}
