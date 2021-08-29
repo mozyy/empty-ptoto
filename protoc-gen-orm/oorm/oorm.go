@@ -2,16 +2,21 @@ package oorm
 
 import (
 	"log"
+	"regexp"
 	"sort"
 
-	"github.com/gogo/protobuf/proto"
+	"github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
+	"github.com/gogo/protobuf/vanity"
+	"gorm.io/gorm/schema"
 	"protoc.yyue.dev/protoc-gen-orm/orm"
 )
 
 type Oorm struct {
 	*generator.Generator
 	generator.PluginImports
+	pkgGorm generator.Single
+	pkgTime generator.Single
 }
 
 // Name identifies the plugin.
@@ -29,42 +34,130 @@ func (o *Oorm) Init(g *generator.Generator) {
 // except for the imports, by calling the generator's methods P, In, and Out.
 func (o *Oorm) Generate(file *generator.FileDescriptor) {
 	o.PluginImports = generator.NewPluginImports(o.Generator)
-
-	timePkg := o.NewImport("time")
+	o.pkgGorm = o.NewImport("gorm.io/gorm")
+	o.pkgTime = o.NewImport("time")
+	hasOrmableMessage := false
 	for _, message := range file.Messages() {
 		if message.GetOptions().GetMapEntry() {
 			continue
 		}
-		if message.Options != nil {
-			v, err := proto.GetExtension(message.Options, orm.E_Ormable)
-			if err == nil {
-				opts, ok := v.(*bool)
-				if ok && *opts {
-					log.Println("install: ", message.TypeName())
-					// pase message
-					o.P(`type `, message.TypeName()[0], `ORM struct {`)
-					fields := fieldSort(message.GetField())
-					sort.Sort(fields)
-					for _, field := range fields {
-						o.OneOfTypeName(message, field)
-						o.Out()
-						fieldType := o.getFieldType(message, field)
-						fieldName := generator.CamelCase(field.GetName())
-						log.Println("install: ", field)
-						if fieldType != "" {
-							o.P(fieldName, ` `, fieldType, o.renderGormTag(fieldName))
-						}
-					}
-					o.P(`}`)
+
+		ormable := vanity.MessageHasBoolExtension(message.DescriptorProto, orm.E_Ormable)
+		if ormable {
+			hasOrmableMessage = true
+			log.Println(message.GetName(), message.GetOptions().GetMapEntry())
+			messageName := message.TypeName()[len(message.TypeName())-1]
+			o.P(`type `, messageName, `ORM struct {`)
+			fields := fieldSort(message.GetField())
+			sort.Stable(fields)
+			for _, field := range fields {
+				fieldName := generator.CamelCase(field.GetName())
+				fieldType, _ := o.GoType(message, field)
+				o.RecordTypeUse(field.GetTypeName())
+				if o.fieldIsOrmableMessag(field) {
+					o.P(fieldName, `ORM `, fieldType, `ORM`)
+					continue
+				}
+				switch fieldName {
+				case "CreatedAt", "UpdatedAt":
+					o.P(fieldName, ` `, o.pkgTime.Use()+".Time")
+				case "DeletedAt":
+					o.P(fieldName, ` `, o.pkgGorm.Use()+".DeletedAt", " `gorm:\"index\"`")
+				case "ID":
+					o.P(fieldName, ` `, fieldType, " `gorm:\"primary_key\"`")
+				default:
+					o.P(fieldName, ` `, fieldType)
 				}
 			}
+			o.P("}")
+			// 生成表名 Name
+			o.P(`func (*`, messageName, `ORM) Name() string {`)
+			o.P(`return "`, schema.NamingStrategy{}.TableName(messageName), `"`)
+			o.P("}\n")
+			// ToPB
+			o.P(`func (o *`, messageName, `ORM) ToPB() *`, messageName, ` {`)
+			o.P(`value := &`, messageName, `{`)
+			hasDeletedAt := false
+			for _, field := range fields {
+				fieldName := generator.CamelCase(field.GetName())
+				if fieldName == "DeletedAt" {
+					hasDeletedAt = true
+					continue
+				}
+				o.P(fieldName, `: `, o.renderGormToPBType(field))
+			}
+			o.P("}")
+			if hasDeletedAt {
+				o.P(`deletedAtValue, _ := o.DeletedAt.Value()`)
+				o.P(`if deletedAt, ok := deletedAtValue.(time.Time); ok {`)
+				o.P(`value.DeletedAt = timestamppb.New(deletedAt)`)
+				o.P("}")
+			}
+			o.P("return value")
+			o.P("}\n")
+			// ToORM
+			o.P(`func (s *`, messageName, `) ToORM() *`, messageName, `ORM {`)
+			o.P(`value := &`, messageName, `ORM {`)
+			hasDeletedAt = false
+			for _, field := range fields {
+				fieldName := generator.CamelCase(field.GetName())
+				if fieldName == "DeletedAt" {
+					hasDeletedAt = true
+					continue
+				}
+				if o.fieldIsOrmableMessag(field) {
+					o.P(fieldName, `ORM: `, "s."+fieldName+".ToORM(),")
+					continue
+				}
+				switch fieldName {
+				case "CreatedAt", "UpdatedAt":
+					o.P(fieldName, `: `, "s."+fieldName+".AsTime(),")
+				default:
+					o.P(fieldName, `: `, "s."+fieldName+",")
+				}
+			}
+			o.P("}")
+			if hasDeletedAt {
+				o.P(`value.DeletedAt.Scan(s.DeletedAt)`)
+			}
+			o.P("return value")
+			o.P("}\n")
 		}
 	}
-
+	if !hasOrmableMessage {
+		// TODO: 不生成没有message 的文件
+		// o.Fail("no orm able message.")
+	}
 }
 
 // GenerateImports produces the import declarations for this file.
 // It is called after Generate.
 func (o *Oorm) GenerateImports(file *generator.FileDescriptor) {
-	panic("not implemented") // TODO: Implement
+	o.PluginImports.GenerateImports(file)
+}
+
+func (o *Oorm) fieldIsOrmableMessag(field *descriptor.FieldDescriptorProto) bool {
+	if field.IsMessage() {
+		typeInfos := regexp.MustCompile(`\.?(.*)\.(\S+)$`).FindStringSubmatch(field.GetTypeName())
+		if len(typeInfos) == 3 {
+			packageName := typeInfos[1]
+			typeName := typeInfos[2]
+			desc := o.AllFiles().GetMessage(packageName, typeName)
+			ormable := vanity.MessageHasBoolExtension(desc, orm.E_Ormable)
+			return ormable
+		}
+	}
+	return false
+}
+func (o *Oorm) renderGormToPBType(field *descriptor.FieldDescriptorProto) string {
+	fieldName := generator.CamelCase(field.GetName())
+	if o.fieldIsOrmableMessag(field) {
+		return "o." + fieldName + "ORM.ToPB(),"
+	}
+	switch fieldName {
+	case "CreatedAt", "UpdatedAt":
+		return "timestamppb.New(o." + fieldName + "),"
+	default:
+		return "o." + fieldName + ","
+	}
 }

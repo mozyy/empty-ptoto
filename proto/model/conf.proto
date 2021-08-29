@@ -1,14 +1,14 @@
 syntax = "proto3";
 import "google/protobuf/timestamp.proto";
-import "gorm/options/gorm.proto";
+import "protoc-gen-orm/orm/orm.proto";
 
 
 package model;
 option go_package = "github.com/mozyy/empty-news/proto/pbmodel;pbmodel";
 
 message Conf {
-	option (gorm.opts).ormable = true;
-	uint32 id = 1 [(gorm.field).tag = {primary_key: true}];
+	option (orm.ormable) = true;
+	uint32 ID = 1;
 	google.protobuf.Timestamp created_at = 2;
 	google.protobuf.Timestamp updated_at = 3;
 	google.protobuf.Timestamp deleted_at = 4;

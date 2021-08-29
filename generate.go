@@ -16,9 +16,9 @@ import (
 // const modulesPath = "submodules"
 const modulesPath = "../"
 
-var useGorm = flag.Bool("gorm", false, "use gorm gen")
-
 func main() {
+	var useGorm = flag.Bool("gorm", false, "use gorm gen")
+	flag.Parse()
 	dir, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -54,8 +54,9 @@ func main() {
 				// 所以用上面的
 
 				// fmt.Sprintf("--micro_out=%s", goOutPath),
-				// fmt.Sprintf("--go_out=plugins=grpc,module=github.com/mozyy:%s", goOutPath),
-				fmt.Sprintf("--gogo_out=:%s", "."),
+				fmt.Sprintf("--go_out=plugins=grpc,module=github.com/mozyy:%s", goOutPath),
+				// fmt.Sprintf("--orm_out=module=github.com/mozyy:%s", goOutPath),
+				// fmt.Sprintf("--gogo_out=:%s", "."),
 				// fmt.Sprintf("--go_out=plugins=micro:%s", goOutPath),
 				// js
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webOutPath),
@@ -68,7 +69,8 @@ func main() {
 			if *useGorm {
 				args = append(args,
 					// TODO: 先生成到 ./github.com/mozyy/empty-news, 再用脚本复制过去
-					fmt.Sprintf("--gorm_out=:%s", "."))
+					// fmt.Sprintf("--gorm_out=:%s", "."))
+					fmt.Sprintf("--orm_out=:%s", "."))
 			}
 			args = append(args, relPath)
 			cmd := exec.Command("protoc", args...)
@@ -86,6 +88,7 @@ func main() {
 		panic(err)
 	}
 	if *useGorm {
+		fmt.Println("2222")
 		err := copy.DirCopy(path.Join(dir, "./github.com/mozyy/empty-news/proto"),
 			path.Join(dir, "../empty-news/proto"), copy.Content, false)
 		os.RemoveAll(path.Join(dir, "github.com"))
