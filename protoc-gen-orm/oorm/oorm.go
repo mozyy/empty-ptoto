@@ -55,7 +55,8 @@ func (o *Oorm) Generate(file *generator.FileDescriptor) {
 				fieldType, _ := o.GoType(message, field)
 				o.RecordTypeUse(field.GetTypeName())
 				if o.fieldIsOrmableMessag(field) {
-					o.P(fieldName, `ORM `, fieldType, `ORM`)
+					o.P(fieldName, `ORM `, fieldType, "ORM `gorm:\"foreignKey:", fieldName, "ORMID\"`")
+					o.P(fieldName, `ORMID uint32`)
 					continue
 				}
 				switch fieldName {
@@ -71,7 +72,7 @@ func (o *Oorm) Generate(file *generator.FileDescriptor) {
 			}
 			o.P("}")
 			// 生成表名 Name
-			o.P(`func (*`, messageName, `ORM) Name() string {`)
+			o.P(`func (*`, messageName, `ORM) TableName() string {`)
 			o.P(`return "`, schema.NamingStrategy{}.TableName(messageName), `"`)
 			o.P("}\n")
 			// ToPB
@@ -84,7 +85,16 @@ func (o *Oorm) Generate(file *generator.FileDescriptor) {
 					hasDeletedAt = true
 					continue
 				}
-				o.P(fieldName, `: `, o.renderGormToPBType(field))
+				if o.fieldIsOrmableMessag(field) {
+					o.P(fieldName, `: `, "o."+fieldName+"ORM.ToPB(),")
+					continue
+				}
+				switch fieldName {
+				case "CreatedAt", "UpdatedAt":
+					o.P(fieldName, `: `, "timestamppb.New(o."+fieldName+"),")
+				default:
+					o.P(fieldName, `: `, "o."+fieldName+",")
+				}
 			}
 			o.P("}")
 			if hasDeletedAt {
@@ -107,6 +117,7 @@ func (o *Oorm) Generate(file *generator.FileDescriptor) {
 				}
 				if o.fieldIsOrmableMessag(field) {
 					o.P(fieldName, `ORM: `, "s."+fieldName+".ToORM(),")
+					o.P(fieldName, `ORMID: `, "s."+fieldName+".ID,")
 					continue
 				}
 				switch fieldName {
@@ -148,16 +159,4 @@ func (o *Oorm) fieldIsOrmableMessag(field *descriptor.FieldDescriptorProto) bool
 		}
 	}
 	return false
-}
-func (o *Oorm) renderGormToPBType(field *descriptor.FieldDescriptorProto) string {
-	fieldName := generator.CamelCase(field.GetName())
-	if o.fieldIsOrmableMessag(field) {
-		return "o." + fieldName + "ORM.ToPB(),"
-	}
-	switch fieldName {
-	case "CreatedAt", "UpdatedAt":
-		return "timestamppb.New(o." + fieldName + "),"
-	default:
-		return "o." + fieldName + ","
-	}
 }
