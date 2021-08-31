@@ -18,3 +18,14 @@ message Conf {
 	string desc = 8;
 }
 
+message ConfApi {
+	option (orm.ormable) = true;
+	uint32 ID = 1;
+	google.protobuf.Timestamp created_at = 2;
+	google.protobuf.Timestamp updated_at = 3;
+	google.protobuf.Timestamp deleted_at = 4;
+	string api = 5;
+	string scope = 6;
+	string desc = 7;
+}
+

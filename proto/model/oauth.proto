@@ -27,5 +27,5 @@ message OAuthClient {
 	google.protobuf.Timestamp deleted_at = 4;
 	string secret = 5;
 	string domain = 6;
-	string user_ID = 7;
+	string userID = 7;
 }
