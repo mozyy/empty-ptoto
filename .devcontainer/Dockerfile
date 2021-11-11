@@ -29,28 +29,28 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then umask 0002 && . /usr/local/share/nvm
 
 ENV GO111MODULE on
 
-RUN go get github.com/golang/protobuf/proto && \
-    go get github.com/golang/protobuf/protoc-gen-go && \
-    go get github.com/micro/micro/v3/cmd/protoc-gen-micro && \
-    go get github.com/micro/micro/v3/cmd/protoc-gen-openapi
+RUN go install github.com/golang/protobuf/proto@lates && \
+    go install github.com/golang/protobuf/protoc-gen-go@lates
+    # go install github.com/micro/micro/v3/cmd/protoc-gen-micro && \
+    # go install github.com/micro/micro/v3/cmd/protoc-gen-openapi
 
 # ENV GOPROXY=https://goproxy.cn,direct
 
-ARG PROTOC_VERSION=3.14.0
+ARG PROTOC_VERSION=3.19.1
 ARG PROTOC_ZIP=protoc-${PROTOC_VERSION}-linux-x86_64.zip
 
 RUN curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/${PROTOC_ZIP} && \
     unzip $PROTOC_ZIP -d ~/.local && \
     rm -f $PROTOC_ZIP
 
-ARG PROTOC_WEB_VERSION=1.2.1
+ARG PROTOC_WEB_VERSION=1.3.0
 ARG PROTOC_WEB_ZIP=protoc-gen-grpc-web-${PROTOC_WEB_VERSION}-linux-x86_64
 
 RUN curl -L -o /usr/local/bin/protoc-gen-grpc-web https://github.com/grpc/grpc-web/releases/download/${PROTOC_WEB_VERSION}/${PROTOC_WEB_ZIP} && \
     chmod +x /usr/local/bin/protoc-gen-grpc-web
 
 
-RUN go get github.com/infobloxopen/protoc-gen-gorm
+RUN go install github.com/infobloxopen/protoc-gen-gorm@lates
 
 # RUN git clone --depth 1 https://github.com/googleapis/googleapis.git $GOPATH/src/github.com/googleapis/googleapis
 
