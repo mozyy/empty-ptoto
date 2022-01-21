@@ -1,24 +1,11 @@
 syntax = "proto3";
+import "google/protobuf/timestamp.proto";
 
-package gorm.types;
-option go_package = "github.com/infobloxopen/protoc-gen-gorm/types;types";
+package types;
 
-message UUIDValue {
-  string value = 1;
-}
+// option go_package = "gorm.io/gorm;gorm";
+option go_package = "github.com/mozyy/protoc-gen-gorm/types;gorm";
 
-message JSONValue {
-  string value = 1;
-}
-
-message UUID {
-  string value = 1;
-}
-
-message InetValue {
-  string value = 1;
-}
-
-message TimeOnly {
-  uint32 value = 1;
+message DeletedAt {
+  google.protobuf.Timestamp time = 2; // created_at
 }

@@ -29,14 +29,14 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then umask 0002 && . /usr/local/share/nvm
 
 ENV GO111MODULE on
 
-RUN go install github.com/golang/protobuf/proto@lates && \
-    go install github.com/golang/protobuf/protoc-gen-go@lates
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest && \
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
     # go install github.com/micro/micro/v3/cmd/protoc-gen-micro && \
     # go install github.com/micro/micro/v3/cmd/protoc-gen-openapi
 
 # ENV GOPROXY=https://goproxy.cn,direct
 
-ARG PROTOC_VERSION=3.19.1
+ARG PROTOC_VERSION=3.19.3
 ARG PROTOC_ZIP=protoc-${PROTOC_VERSION}-linux-x86_64.zip
 
 RUN curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/${PROTOC_ZIP} && \
@@ -50,7 +50,7 @@ RUN curl -L -o /usr/local/bin/protoc-gen-grpc-web https://github.com/grpc/grpc-w
     chmod +x /usr/local/bin/protoc-gen-grpc-web
 
 
-RUN go install github.com/infobloxopen/protoc-gen-gorm@lates
+RUN go install github.com/mozyy/protoc-gen-gorm@latest
 
 # RUN git clone --depth 1 https://github.com/googleapis/googleapis.git $GOPATH/src/github.com/googleapis/googleapis
 

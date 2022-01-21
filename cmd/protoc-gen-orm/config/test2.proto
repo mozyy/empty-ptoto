@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-import "protoc-gen-orm/orm/orm.proto";
+// import "protoc-gen-orm/orm/orm.proto";
 
 package conf2;
 
 option go_package = "github.com/mozyy/empty-news/proto/pbconf2;pbconf2";
 
 message DeleteType2 {
-	option (orm.ormable) = true;
+	// option (orm.ormable) = true;
 	uint32 ID = 1;
 }
 

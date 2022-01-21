@@ -1,17 +1,19 @@
 syntax = "proto3";
+
 import "google/protobuf/timestamp.proto";
-import "protoc-gen-orm/orm/orm.proto";
+import "gorm/options/gorm.proto";
+import "gorm/types/types.proto";
 
 package model;
 
 option go_package = "github.com/mozyy/empty-news/proto/pbmodel;pbmodel";
 
 message OAuthToken {
-	option (orm.ormable) = true;
-	uint32 ID = 1;
-	google.protobuf.Timestamp created_at = 2;
-	google.protobuf.Timestamp updated_at = 3;
-	google.protobuf.Timestamp deleted_at = 4;
+	option (gorm.ormable) = true;
+	uint32 ID = 1 [(gorm.tag) = "primaryKey"];
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
 	string access_token = 5;
 	string token_type = 6;
 	string refresh_token = 7;
@@ -20,11 +22,11 @@ message OAuthToken {
 
 
 message OAuthClient {
-	option (orm.ormable) = true;
-	uint32 ID = 1;
-	google.protobuf.Timestamp created_at = 2;
-	google.protobuf.Timestamp updated_at = 3;
-	google.protobuf.Timestamp deleted_at = 4;
+	option (gorm.ormable) = true;
+	uint32 ID = 1 [(gorm.tag) = "primaryKey"];
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
 	string secret = 5;
 	string domain = 6;
 	string userID = 7;
