@@ -24,11 +24,14 @@ func main() {
 
 	goOutPath := path.Join(dir, modulesPath)
 	webOutPath := path.Join(dir, modulesPath, "empty-frontend/src")
+	webNgOutPath := path.Join(dir, modulesPath, "empty-frontend-ng/src")
 	// openApiOutPath := path.Join(dir, "submodules/empty-frontend/src/openapi")
 	os.RemoveAll(path.Join(goOutPath, "empty-news/proto"))
-	os.MkdirAll(path.Join(goOutPath, "empty-news/proto"), os.ModeDir)
+	os.MkdirAll(path.Join(goOutPath, "empty-news/proto"), 0551)
 	os.RemoveAll(path.Join(webOutPath, "proto"))
-	os.MkdirAll(path.Join(webOutPath, "proto"), os.ModeDir)
+	os.MkdirAll(path.Join(webOutPath, "proto"), 0551)
+	os.RemoveAll(path.Join(webNgOutPath, "proto"))
+	os.MkdirAll(path.Join(webNgOutPath, "proto"), 0551)
 
 	protoPath := path.Join(dir, "proto")
 
@@ -61,6 +64,8 @@ func main() {
 				// js
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webOutPath),
 				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s", webOutPath),
+				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webNgOutPath),
+				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s", webNgOutPath),
 				// openapi
 				// fmt.Sprintf("--openapi_out=%s", openApiOutPath),
 

@@ -1,54 +1,57 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.154.2/containers/go
 {
-	"name": "empty-proto",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			// Update the VARIANT arg to pick a version of Go: 1, 1.15, 1.14
-			"VARIANT": "1.17",
-			// Options
-			"INSTALL_NODE": "false",
-			"NODE_VERSION": "lts/*",
-			"HTTP_PROXY": "${localEnv:proxy_addr}",
-			"HTTPS_PROXY": "${localEnv:proxy_addr}"
-		}
-	},
-	// Use this environment variable if you need to bind mount your local source code into a new container.
-	"remoteEnv": {
-		// "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-		"http_proxy": "${localEnv:proxy_addr}",
-		"https_proxy": "${localEnv:proxy_addr}",
-		"mysql_dsn": "${localEnv:mysql_dsn}"
-	},
-	"runArgs": [
-		"--cap-add=SYS_PTRACE",
-		"--security-opt",
-		"seccomp=unconfined"
-	],
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash",
-		"go.toolsManagement.checkForUpdates": "proxy",
-		"go.useLanguageServer": true,
-		"go.gopath": "/go",
-		"go.goroot": "/usr/local/go",
-		"go.toolsGopath": "/go/bin",
-		"gopls": {
-			"build.allowImplicitNetworkAccess": true
-		}
-	},
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"golang.Go",
-		// "plex.vscode-protolint",
-		"zxh404.vscode-proto3",
-		"yang-yue.switch-hosts",
-	],
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "go version",
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "root"
+  "name": "EmptyProto",
+  "image": "mozyy/dev-container:1.0.0",
+  // "build": {
+  //   "dockerfile": "Dockerfile",
+  //   // Update the VARIANT arg to pick a version of Go: 1, 1.18, 1.17
+  //   "args": {
+  //     // "VARIANT": "1.18"
+  //     // "HTTP_PROXY": "${localEnv:proxy_addr}",
+  //     // "HTTPS_PROXY": "${localEnv:proxy_addr}"
+  //   }
+  // },
+  "runArgs": ["--init"],
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
+  ],
+  "overrideCommand": false,
+
+  // Use this environment variable if you need to bind mount your local source code into a new container.
+  "remoteEnv": {
+    // "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+    "http_proxy": "${localEnv:proxy_addr}",
+    "https_proxy": "${localEnv:proxy_addr}",
+    "mysql_dsn": "${localEnv:mysql_dsn}",
+    "postgresql_dsn": "${localEnv:postgresql_dsn}"
+  },
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.profiles.linux": {
+      "zsh (login)": {
+        "path": "zsh",
+        "args": ["-l"]
+      }
+    },
+    "go.toolsManagement.checkForUpdates": "local",
+    "go.useLanguageServer": true,
+    "go.gopath": "/go"
+    // "go.goroot": "/usr/local/go"
+  },
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "ms-azuretools.vscode-docker",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "golang.Go",
+    "zxh404.vscode-proto3"
+  ]
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "go version",
+  // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "root"
 }
