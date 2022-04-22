@@ -2,16 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.154.2/containers/go
 {
   "name": "EmptyProto",
-  "image": "mozyy/dev-container:1.0.0",
-  // "build": {
-  //   "dockerfile": "Dockerfile",
-  //   // Update the VARIANT arg to pick a version of Go: 1, 1.18, 1.17
-  //   "args": {
-  //     // "VARIANT": "1.18"
-  //     // "HTTP_PROXY": "${localEnv:proxy_addr}",
-  //     // "HTTPS_PROXY": "${localEnv:proxy_addr}"
-  //   }
-  // },
+  "image": "mozyy/empty-dev-container:1.0.4",
   "runArgs": ["--init"],
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"

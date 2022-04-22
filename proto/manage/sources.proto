@@ -11,8 +11,10 @@ option go_package = "github.com/mozyy/empty-news/proto/pbmanage;pbmanage";
 
 service Sources {
 	option (gorm.autogen) = true;
-	rpc Create(SourcesItem) returns (google.protobuf.Empty) {}
+	rpc Create(SourcesItem) returns (SourcesItem) {}
+	rpc Update(SourcesItem) returns (SourcesItem) {}
 	rpc List(SourcesItem) returns (ListResponse) {}
+	rpc Delete(SourcesItem) returns (google.protobuf.Empty) {}
 }
 
 message SourcesItem {
