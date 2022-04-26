@@ -4,7 +4,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
-import "proto/model/oauth.proto";
+import "proto/user/oauth.proto";
 
 package conf;
 
@@ -32,7 +32,7 @@ message Config {
 	string value = 6;
 	string content = 7;
 	string desc = 8;
-	model.OAuthToken o_auth_token = 9;
+	oauth.OAuthToken o_auth_token = 9;
 }
 
 message DeleteType {

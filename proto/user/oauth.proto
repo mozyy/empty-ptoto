@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "gorm/options/gorm.proto";
+import "gorm/types/types.proto";
+
+package oauth;
+
+option go_package = "github.com/mozyy/empty-news/proto/pbuser;pbuser";
+
+message OAuthToken {
+	option (gorm.ormable) = true;
+	uint32 ID = 1 [(gorm.tag) = "primaryKey"];
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
+	string clientID = 5;
+	string userID = 6;
+	string redirectURI = 7;
+	string scope = 8;
+
+	string code = 9;
+	google.protobuf.Timestamp code_create_at = 10;
+	int64 code_expires_in = 11;
+	string code_challenge = 12;
+	string code_challenge_method = 13;
+
+	string access = 14;
+	google.protobuf.Timestamp access_create_at = 15;
+	int64 access_expires_in = 16;
+
+	string refresh = 17;
+	google.protobuf.Timestamp refresh_create_at = 18;
+	int64 refresh_expires_in = 19;
+
+	string token_type = 20;
+}
+
+
+message OAuthClient {
+	option (gorm.ormable) = true;
+	uint32 ID = 1 [(gorm.tag) = "primaryKey"];
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
+	string clientID = 5;
+	string secret = 6;
+	string domain = 7;
+	string userID = 8;
+}

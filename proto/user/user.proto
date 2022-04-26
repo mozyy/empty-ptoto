@@ -1,15 +1,15 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
-import "proto/model/oauth.proto";
+import "proto/user/oauth.proto";
 
 package user;
 
 option go_package = "github.com/mozyy/empty-news/proto/pbuser;pbuser";
 
 service User {
-	rpc Register(RegisterRequest) returns (model.OAuthToken) {}
-	rpc Login(LoginRequest) returns (model.OAuthToken) {}
+	rpc Register(RegisterRequest) returns (oauth.OAuthToken) {}
+	rpc Login(LoginRequest) returns (oauth.OAuthToken) {}
 	rpc Info(google.protobuf.Empty) returns (InfoResponse) {}
 }
 
