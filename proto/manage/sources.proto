@@ -28,8 +28,9 @@ message SourcesItem {
   string key = 7 [(gorm.tag) = "unique"];
 
   Type type = 8;
-  //路由
-  bool index = 9; // 是否首页
+  // 路由
+  // 是否首页
+  bool index = 9;
 	string path = 10;
 	string name = 11;
   bool menu = 12;

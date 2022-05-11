@@ -57,6 +57,7 @@ func main() {
 				// fmt.Sprintf("--micro_out=%s", goOutPath),
 				fmt.Sprintf("--go_out=module=github.com/mozyy:%s", goOutPath),
 				fmt.Sprintf("--go-grpc_out=module=github.com/mozyy:%s", goOutPath),
+				fmt.Sprintf("--grpc-gateway_out=module=github.com/mozyy,logtostderr=true,generate_unbound_methods=true:%s", goOutPath),
 				fmt.Sprintf("--gorm_out=module=github.com/mozyy:%s", goOutPath),
 				// fmt.Sprintf("--orm_out=module=github.com/mozyy:%s", goOutPath),
 				// fmt.Sprintf("--gogo_out=:%s", "."),
@@ -64,8 +65,10 @@ func main() {
 				// js
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webOutPath),
 				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s", webOutPath),
+				fmt.Sprintf("--openapiv2_out=logtostderr=true:%s", webOutPath),
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webNgOutPath),
 				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s", webNgOutPath),
+				fmt.Sprintf("--openapiv2_out=logtostderr=true:%s", webNgOutPath),
 				// openapi
 				// fmt.Sprintf("--openapi_out=%s", openApiOutPath),
 
