@@ -68,7 +68,7 @@ func main() {
 				fmt.Sprintf("--openapiv2_out=logtostderr=true:%s", webOutPath),
 				fmt.Sprintf("--js_out=import_style=commonjs,binary:%s", webNgOutPath),
 				fmt.Sprintf("--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s", webNgOutPath),
-				fmt.Sprintf("--openapiv2_out=logtostderr=true:%s", webNgOutPath),
+				fmt.Sprintf("--openapiv2_out=logtostderr=true,generate_unbound_methods=true:%s", webNgOutPath),
 				// openapi
 				// fmt.Sprintf("--openapi_out=%s", openApiOutPath),
 
