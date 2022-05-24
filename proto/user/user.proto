@@ -1,7 +1,11 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "gorm/options/gorm.proto";
+import "gorm/types/types.proto";
 import "proto/user/oauth.proto";
+import "proto/manage/role.proto";
 
 package user;
 
@@ -26,6 +30,12 @@ message LoginRequest {
 
 
 message InfoResponse {
-	string name = 1;
-	string mobile = 2;
+	option (gorm.ormable) = true;
+	uint32 ID = 1 [(gorm.tag) = "primaryKey"];
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
+	string name = 5;
+	string mobile = 6;
+	repeated role.RoleItem resource_items = 7;
 }

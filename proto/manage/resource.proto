@@ -5,26 +5,26 @@ import "google/protobuf/timestamp.proto";
 import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
 
-package manage;
+package resource;
 
 option go_package = "github.com/mozyy/empty-news/proto/pbmanage;pbmanage";
 
-service Sources {
+service Resource {
 	option (gorm.autogen) = true;
-	rpc Create(SourcesItem) returns (SourcesItem) {}
-	rpc Update(SourcesItem) returns (SourcesItem) {}
-	rpc List(SourcesItem) returns (ListResponse) {}
-	rpc Delete(SourcesItem) returns (google.protobuf.Empty) {}
+	rpc Create(ResourceItem) returns (ResourceItem) {}
+	rpc Update(ResourceItem) returns (ResourceItem) {}
+	rpc List(ResourceItem) returns (ListResponse) {}
+	rpc Delete(ResourceItem) returns (google.protobuf.Empty) {}
 }
 
-message SourcesItem {
+message ResourceItem {
 	option (gorm.ormable) = true;
 	uint32 ID = 1 [(gorm.tag) = "primaryKey"];
   google.protobuf.Timestamp created_at = 2;
   google.protobuf.Timestamp updated_at = 3;
   types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
-	uint32 sources_itemID = 5;
-  repeated SourcesItem children = 6 [(gorm.tag) = "foreignKey:SourcesItemID"];
+	uint32 resource_itemID = 5;
+  repeated ResourceItem children = 6 [(gorm.tag) = "foreignKey:ResourceItemID"];
   string key = 7 [(gorm.tag) = "unique"];
 
   Type type = 8;
@@ -47,5 +47,5 @@ message SourcesItem {
 
 
 message ListResponse {
-  repeated SourcesItem list  = 1;
+  repeated ResourceItem list  = 1;
 }
