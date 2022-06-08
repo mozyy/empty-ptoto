@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package system.resource.v1;
+
+import "google/protobuf/timestamp.proto";
+import "gorm/options/gorm.proto";
+import "gorm/types/types.proto";
+
+option go_package = "github.com/mozyy/empty-news/proto/pbmanage;pbmanage";
+
+service ResourceService {
+  option (gorm.autogen) = true;
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc List(ListRequest) returns (ListResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+}
+
+message Resource {
+  option (gorm.ormable) = true;
+  uint32 ID = 1 [(gorm.tag) = "primaryKey"];
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
+  uint32 resource_itemID = 5;
+  repeated Resource children = 6 [(gorm.tag) = "foreignKey:ResourceItemID"];
+  string key = 7 [(gorm.tag) = "unique"];
+
+  TYPE type = 8;
+  // 路由
+  // 是否首页
+  bool index = 9;
+  string path = 10;
+  string name = 11;
+  bool menu = 12;
+  string icon = 13;
+  //
+  string desc = 14;
+
+  enum TYPE {
+    TYPE_ROUTE_UNSPECIFIED = 0;
+    TYPE_FUNCTION = 1;
+    TYPE_API = 2;
+  }
+}
+
+message CreateRequest {
+  Resource resource = 1;
+}
+message CreateResponse {
+  Resource resource = 1;
+}
+message UpdateRequest {
+  Resource resource = 1;
+}
+message UpdateResponse {
+  Resource resource = 1;
+}
+
+message ListRequest {
+  Resource resource = 1;
+}
+message ListResponse {
+  repeated Resource resources = 1;
+}
+
+message DeleteRequest {
+  Resource resource = 1;
+}
+message DeleteResponse {
+  Resource resource = 1;
+}

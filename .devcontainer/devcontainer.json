@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.154.2/containers/go
 {
   "name": "EmptyProto",
-  "image": "mozyy/empty-dev-container:1.0.5",
+  "image": "mozyy/empty-dev-container:1.0.7",
   "runArgs": ["--init"],
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
@@ -36,7 +36,8 @@
     "esbenp.prettier-vscode",
     "eamodio.gitlens",
     "golang.Go",
-    "zxh404.vscode-proto3"
+    "zxh404.vscode-proto3",
+    "bufbuild.vscode-buf"
   ]
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
