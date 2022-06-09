@@ -3,37 +3,41 @@ managed:
   enabled: true
   go_package_prefix:
     default: github.com/mozyy/empty-news/proto
+  override:
+    GO_PACKAGE:
+      gorm/options/gorm.proto: github.com/mozyy/protoc-gen-gorm/options
+      gorm/types/types.proto: github.com/mozyy/protoc-gen-gorm/types
 plugins:
   - name: go
-    out: gen
+    out: ../
     opt: module=github.com/mozyy
   - name: go-grpc
-    out: gen
+    out: ../
     opt:
       - module=github.com/mozyy
   - name: grpc-gateway
-    out: gen
+    out: ../
     opt:
       - module=github.com/mozyy
       - logtostderr=true
       - generate_unbound_methods=true
   - name: gorm
-    out: gen
+    out: ../
     opt:
       - module=github.com/mozyy
 # js
   - name: js
-    out: gen/web
+    out: ../empty-frontend-ng/src/proto
     opt:
       - import_style=commonjs
       - binary
   - name: grpc-web
-    out: gen/web
+    out: ../empty-frontend-ng/src/proto
     opt:
       - import_style=typescript
       - mode=grpcweb
   - name: openapiv2
-    out: gen/web
+    out: ../empty-frontend-ng/src/proto
     opt:
       - logtostderr=true
       - generate_unbound_methods=true

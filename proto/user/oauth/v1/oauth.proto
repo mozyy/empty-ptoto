@@ -12,21 +12,29 @@ message OAuthToken {
   google.protobuf.Timestamp created_at = 2;
   google.protobuf.Timestamp updated_at = 3;
   types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
+  // 客户端id
   string clientID = 5;
+  // 用户id
   string userID = 6;
+  // 回调地址
   string redirectURI = 7;
+  // 请求权限
   string scope = 8;
 
+  // code
   string code = 9;
+  // code 创建时间
   google.protobuf.Timestamp code_create_at = 10;
   int64 code_expires_in = 11;
   string code_challenge = 12;
   string code_challenge_method = 13;
 
+  // access
   string access = 14;
   google.protobuf.Timestamp access_create_at = 15;
   int64 access_expires_in = 16;
 
+  // 刷新
   string refresh = 17;
   google.protobuf.Timestamp refresh_create_at = 18;
   int64 refresh_expires_in = 19;

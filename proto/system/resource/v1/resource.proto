@@ -16,6 +16,7 @@ service ResourceService {
   rpc Delete(DeleteRequest) returns (DeleteResponse) {}
 }
 
+// 系统资源
 message Resource {
   option (gorm.ormable) = true;
   uint32 ID = 1 [(gorm.tag) = "primaryKey"];
@@ -27,6 +28,7 @@ message Resource {
   string key = 7 [(gorm.tag) = "unique"];
 
   TYPE type = 8;
+
   // 路由
   // 是否首页
   bool index = 9;
@@ -34,12 +36,16 @@ message Resource {
   string name = 11;
   bool menu = 12;
   string icon = 13;
-  //
+  // 描述
   string desc = 14;
 
+  // 资源类型
   enum TYPE {
+    // 路由
     TYPE_ROUTE_UNSPECIFIED = 0;
+    // 功能
     TYPE_FUNCTION = 1;
+    // 接品
     TYPE_API = 2;
   }
 }

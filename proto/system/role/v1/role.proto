@@ -24,7 +24,9 @@ message Role {
   google.protobuf.Timestamp updated_at = 3;
   types.DeletedAt deleted_at = 4 [(gorm.tag) = "index"];
 
+  // 角色名
   string name = 5 [(gorm.tag) = "unique"];
+  // 资源
   repeated system.resource.v1.Resource resource_items = 6;
 }
 
