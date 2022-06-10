@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package sms.sms.v1;
 
-option go_package = "github.com/mozyy/empty-news/proto/pbsms;pbsms";
-
 service SMSService {
   rpc Send(SendRequest) returns (SendResponse) {}
   rpc Validation(ValidationRequest) returns (ValidationResponse) {}

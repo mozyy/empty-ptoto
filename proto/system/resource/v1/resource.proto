@@ -6,8 +6,6 @@ import "google/protobuf/timestamp.proto";
 import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
 
-option go_package = "github.com/mozyy/empty-news/proto/pbmanage;pbmanage";
-
 service ResourceService {
   option (gorm.autogen) = true;
   rpc Create(CreateRequest) returns (CreateResponse) {}
@@ -27,7 +25,7 @@ message Resource {
   repeated Resource children = 6 [(gorm.tag) = "foreignKey:ResourceItemID"];
   string key = 7 [(gorm.tag) = "unique"];
 
-  TYPE type = 8;
+  Type type = 8;
 
   // 路由
   // 是否首页
@@ -40,7 +38,7 @@ message Resource {
   string desc = 14;
 
   // 资源类型
-  enum TYPE {
+  enum Type {
     // 路由
     TYPE_ROUTE_UNSPECIFIED = 0;
     // 功能

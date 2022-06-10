@@ -8,8 +8,6 @@ import "gorm/types/types.proto";
 import "system/role/v1/role.proto";
 import "user/oauth/v1/oauth.proto";
 
-option go_package = "github.com/mozyy/empty-news/proto/pbuser;pbuser";
-
 service UserService {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}
   rpc Login(LoginRequest) returns (LoginResponse) {}
@@ -26,7 +24,7 @@ message RegisterRequest {
 }
 message RegisterResponse {
   // oauth token
-  user.oauth.v1.OAuthToken o_auth_token = 1;
+  user.oauth.v1.TokenInfo o_auth_token = 1;
 }
 
 message LoginRequest {
@@ -39,7 +37,7 @@ message LoginRequest {
 }
 message LoginResponse {
   // oauth token
-  user.oauth.v1.OAuthToken o_auth_token = 1;
+  user.oauth.v1.TokenInfo o_auth_token = 1;
 }
 message InfoRequest {}
 

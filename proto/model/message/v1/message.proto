@@ -7,11 +7,11 @@ package model.message.v1;
 // }
 
 message Message {
-  STATUS state = 1;
+  Status state = 1;
   string message = 2;
 }
 
-enum STATUS {
+enum Status {
   STATUS_SUCCESS_UNSPECIFIED = 0;
   STATUS_INFO = 1;
   STATUS_WARNING = 2;

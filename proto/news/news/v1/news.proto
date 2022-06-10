@@ -24,7 +24,7 @@ message News {
   int32 view = 9;
   int32 comment = 10;
   // 1: 业界, 2: 科学, 3: 影视, 4: 游戏
-  TYPE type = 11;
+  Type type = 11;
 }
 
 message ListRequest {}
@@ -62,7 +62,7 @@ message DetailResponse {
   string no = 10;
 }
 
-enum TYPE {
+enum Type {
   TYPE_INDUSTRY_UNSPECIFIED = 0;
   TYPE_SCIENCE = 1;
   TYPE_FILM = 2;

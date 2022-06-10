@@ -5,3 +5,4 @@ lint:
     - DEFAULT
   except:
     - FIELD_LOWER_SNAKE_CASE
+  allow_comment_ignores: true

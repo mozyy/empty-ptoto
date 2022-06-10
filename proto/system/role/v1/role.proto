@@ -7,8 +7,6 @@ import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
 import "system/resource/v1/resource.proto";
 
-option go_package = "github.com/mozyy/empty-news/proto/pbmanage;pbmanage";
-
 service RoleService {
   option (gorm.autogen) = true;
   rpc Create(CreateRequest) returns (CreateResponse) {}
