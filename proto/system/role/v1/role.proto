@@ -7,6 +7,8 @@ import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
 import "system/resource/v1/resource.proto";
 
+option (gorm.table_prefix) = "role_";
+
 service RoleService {
   option (gorm.autogen) = true;
   rpc Create(CreateRequest) returns (CreateResponse) {}

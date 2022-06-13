@@ -6,6 +6,8 @@ import "google/protobuf/timestamp.proto";
 import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
 
+option (gorm.table_prefix) = "news_";
+
 service NewsService {
   rpc List(ListRequest) returns (ListResponse) {}
   rpc Detail(DetailRequest) returns (DetailResponse) {}

@@ -8,7 +8,9 @@ import "gorm/types/types.proto";
 import "system/role/v1/role.proto";
 import "user/oauth/v1/oauth.proto";
 
-service UserService {
+option (gorm.table_prefix) = "user_";
+
+service LoginService {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}
   rpc Login(LoginRequest) returns (LoginResponse) {}
   rpc Info(InfoRequest) returns (InfoResponse) {}
@@ -24,7 +26,7 @@ message RegisterRequest {
 }
 message RegisterResponse {
   // oauth token
-  user.oauth.v1.TokenInfo o_auth_token = 1;
+  user.oauth.v1.TokenInfo token_info = 1;
 }
 
 message LoginRequest {
@@ -37,7 +39,7 @@ message LoginRequest {
 }
 message LoginResponse {
   // oauth token
-  user.oauth.v1.TokenInfo o_auth_token = 1;
+  user.oauth.v1.TokenInfo token_info = 1;
 }
 message InfoRequest {}
 

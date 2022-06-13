@@ -6,6 +6,8 @@ import "google/protobuf/timestamp.proto";
 import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
 
+option (gorm.table_prefix) = "conf_";
+
 message Conf {
   option (gorm.ormable) = true;
   uint32 ID = 1 [(gorm.tag) = "primaryKey"];

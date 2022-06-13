@@ -6,6 +6,8 @@ import "google/protobuf/timestamp.proto";
 import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
 
+option (gorm.table_prefix) = "resource_";
+
 service ResourceService {
   option (gorm.autogen) = true;
   rpc Create(CreateRequest) returns (CreateResponse) {}
@@ -30,12 +32,18 @@ message Resource {
   // 路由
   // 是否首页
   bool index = 9;
+  // 路由地址/接口地址(正则)
   string path = 10;
+  // 资源名
   string name = 11;
+  // 是否菜单
   bool menu = 12;
+  // 菜单图标
   string icon = 13;
   // 描述
   string desc = 14;
+  // 排序
+  uint32 sort = 15;
 
   // 资源类型
   enum Type {
@@ -43,7 +51,7 @@ message Resource {
     TYPE_ROUTE_UNSPECIFIED = 0;
     // 功能
     TYPE_FUNCTION = 1;
-    // 接品
+    // 接口
     TYPE_API = 2;
   }
 }

@@ -7,6 +7,8 @@ import "gorm/options/gorm.proto";
 import "gorm/types/types.proto";
 import "user/oauth/v1/oauth.proto";
 
+option (gorm.table_prefix) = "config_";
+
 service ConfigService {
   option (gorm.autogen) = true;
   // Create|Read|Update|Delete
@@ -27,7 +29,7 @@ message Config {
   string value = 6;
   string content = 7;
   string desc = 8;
-  user.oauth.v1.TokenInfo o_auth_token = 9;
+  user.oauth.v1.TokenInfo token_info = 9;
 }
 
 message DeleteType {
