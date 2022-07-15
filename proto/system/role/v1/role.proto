@@ -48,12 +48,12 @@ message ListRequest {
   Role role = 1;
 }
 message ListResponse {
-  repeated Role list = 1;
+  repeated Role roles = 1;
 }
 
 message DeleteRequest {
   Role role = 1;
 }
 message DeleteResponse {
-  uint32 ID = 1;
+  // uint32 ID = 1;
 }

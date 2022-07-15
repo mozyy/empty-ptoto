@@ -80,5 +80,5 @@ message DeleteRequest {
   Resource resource = 1;
 }
 message DeleteResponse {
-  Resource resource = 1;
+  // Resource resource = 1;
 }

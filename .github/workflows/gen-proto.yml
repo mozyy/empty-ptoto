@@ -1,0 +1,37 @@
+name: gen proto
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout proto
+        uses: actions/checkout@v3
+        with:
+          path: empty-proto
+
+      - name: Checkout empty-news
+        uses: actions/checkout@v3
+        with:
+          repository: mozyy/empty-news
+          path: empty-news
+          ref: proto
+
+      - name: Checkout empty-frontend-ng
+        uses: actions/checkout@v3
+        with:
+          repository: mozyy/empty-frontend-ng
+          path: empty-frontend-ng
+          ref: proto
+
+      - uses: bufbuild/buf-setup-action@v1
+      - uses: bufbuild/buf-lint-action@v1
+        with:
+          input: empty-ptoto/proto
+      
+      - run: buf generate proto
+        working-directory: empty-proto
+

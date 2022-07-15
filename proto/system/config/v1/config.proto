@@ -64,14 +64,14 @@ message ListRequest {
   Config config = 1;
 }
 message ListResponse {
-  repeated Config results = 1;
+  repeated Config configs = 1;
 }
 
 message DeleteRequest {
   Config config = 1;
 }
 message DeleteResponse {
-  uint32 id = 1;
+  // uint32 id = 1;
 }
 
 enum Type {
