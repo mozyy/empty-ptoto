@@ -47,12 +47,16 @@ jobs:
           go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
           echo $PATH
           echo $GOBIN
+          echo $GOPATH
+          export PATH=$PATH:/home/runner/go/bin
           whereis go
           ls /usr/bin/go
           go env
           ls /home/runner/go
           ls /home/runner/go/bin
-      - run: buf generate proto
+      - run: |
+          echo $PATH
+          buf generate proto
         working-directory: empty-proto
       - run: |
           git status
