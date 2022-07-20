@@ -46,7 +46,7 @@ jobs:
           go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
           go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
           echo $PATH
-          echo "::add-path::${go env GOPATH}/bin"
+          echo "::add-path::`go env GOPATH`/bin"
           echo $PATH
           whereis go
           ls /usr/bin/go
