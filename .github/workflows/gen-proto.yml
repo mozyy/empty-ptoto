@@ -37,7 +37,7 @@ jobs:
         with:
           input: empty-proto/proto
       
-      # - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v3
           # go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
       - run: |
           go version
