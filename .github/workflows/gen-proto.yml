@@ -60,7 +60,8 @@ jobs:
           rm -rf ../empty-frontend-ng/src/proto
           buf generate proto
         working-directory: empty-proto
-      - run: |
+      - if: ${{ git status -s }}
+        run: |
           git config user.name github-actions
           git config user.email yy@yyue.dev
           git add . 
@@ -69,7 +70,8 @@ jobs:
           git pull origin main:main
           git push origin proto:main
         working-directory: empty-news
-      - run: |
+      - if: ${{ git status -s }}
+        run: |
           git config user.name github-actions
           git config user.email yy@yyue.dev
           git add .
