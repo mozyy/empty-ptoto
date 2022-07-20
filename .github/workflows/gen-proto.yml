@@ -27,11 +27,7 @@ jobs:
           ref: proto
 
       - uses: bufbuild/buf-setup-action@v1
-      - run: |
-          pwd
-          ls
-          ls empty-proto
-          go version
+      - run: echo "`go env GOPATH`/bin" >> $GITHUB_PATH
 
       - uses: bufbuild/buf-lint-action@v1
         with:
@@ -40,22 +36,12 @@ jobs:
       - uses: actions/setup-go@v3
           # go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
       - run: |
-          go version
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
           go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
           go install github.com/mozyy/protoc-gen-gorm@latest
           go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
           go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
-          echo $PATH
-          echo "`go env GOPATH`/bin" >> $GITHUB_PATH
-          echo $PATH
-          whereis go
-          ls /usr/bin/go
-          go env GOPATH
-          ls /home/runner/go
-          ls /home/runner/go/bin
-      - run: |
-          echo $PATH
-          buf generate proto
+      - run: buf generate proto
         working-directory: empty-proto
       - run: |
           git status
