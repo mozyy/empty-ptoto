@@ -17,7 +17,7 @@ service LoginService {
 }
 
 message RegisterRequest {
-  // 手机号2
+  // 手机号
   string mobile = 1;
   // 短信验证码
   string sms_code = 2;

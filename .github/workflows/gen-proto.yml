@@ -18,6 +18,7 @@ jobs:
           repository: mozyy/empty-news
           token: ${{ secrets.PROTO_REPO_TOKEN }}
           path: empty-news
+          fetch-depth: 0
           ref: proto
 
       - name: Checkout empty-frontend-ng
@@ -26,6 +27,7 @@ jobs:
           repository: mozyy/empty-frontend-ng
           token: ${{ secrets.PROTO_REPO_TOKEN }}
           path: empty-frontend-ng
+          fetch-depth: 0
           ref: proto
 
       - uses: bufbuild/buf-setup-action@v1
