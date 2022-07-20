@@ -48,6 +48,8 @@ jobs:
           echo $PATH
           echo $GOBIN
           whereis go
+          ls /usr/bin/go
+          go env
       - run: buf generate proto
         working-directory: empty-proto
       - run: |
