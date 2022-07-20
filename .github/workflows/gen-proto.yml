@@ -43,6 +43,10 @@ jobs:
           go version
           go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
           go install github.com/mozyy/protoc-gen-gorm@latest
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+          echo $PATH
+          echo $GOBIN
       - run: buf generate proto
         working-directory: empty-proto
       - run: |
