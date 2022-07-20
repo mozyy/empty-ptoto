@@ -58,24 +58,25 @@ jobs:
       - run: |
           rm -rf ../empty-news/proto
           rm -rf ../empty-frontend-ng/src/proto
-          buf generate proto1
+          buf generate proto
         working-directory: empty-proto
-      - run: |
+      - if: ${{ git status -s != "" }}
+        run: |
           git config user.name github-actions
           git config user.email yy@yyue.dev
           git add . 
           git commit -m "generated proto"
           git push
-          git pull origin main:main
+          git pull origin main:main --ff-only
           git push origin proto:main
-        working-directory: empty- news
-      - if: ${{ always() }}
+        working-directory: empty-news
+      - if: ${{ git status -s != "" }}
         run: |
           git config user.name github-actions
           git config user.email yy@yyue.dev
           git add .
           git commit -m "generated proto"
           git push
-          git pull origin main:main
+          git pull origin main:main --ff-only
           git push origin proto:main
         working-directory: empty-news
