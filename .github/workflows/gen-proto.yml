@@ -69,7 +69,7 @@ jobs:
           else
             git commit -m "generated proto"
             git push
-            git pull origin main:main --ff-only
+            git pull origin main:main --no-ff
             git push origin proto:main
           fi
         working-directory: empty-news
@@ -82,7 +82,7 @@ jobs:
           else
             git commit -m "generated proto"
             git push
-            git pull origin main:main --ff-only
+            git pull origin main:main --no-ff
             git push origin proto:main
           fi
         working-directory: empty-news
