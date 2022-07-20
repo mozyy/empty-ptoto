@@ -58,7 +58,7 @@ jobs:
       - run: |
           rm -rf ../empty-news/proto
           rm -rf ../empty-frontend-ng/src/proto
-          buf generate proto
+          buf generate proto1
         working-directory: empty-proto
       - run: |
           git config user.name github-actions
