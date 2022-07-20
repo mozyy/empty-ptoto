@@ -66,6 +66,7 @@ jobs:
           git add .
           git commit -m "generated proto"
           git push
+          git pull origin main:main
           git push origin proto:main
         working-directory: empty-news
       - run: |
@@ -74,5 +75,6 @@ jobs:
           git add .
           git commit -m "generated proto"
           git push
+          git pull origin main:main
           git push origin proto:main
         working-directory: empty-news
