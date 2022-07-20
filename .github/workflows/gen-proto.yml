@@ -34,7 +34,7 @@ jobs:
 
       - uses: bufbuild/buf-lint-action@v1
         with:
-          input: empty-ptoto/proto
+          input: empty-proto/proto
       
       - run: buf generate proto
         working-directory: empty-proto
