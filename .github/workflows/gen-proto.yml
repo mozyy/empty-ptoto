@@ -50,6 +50,8 @@ jobs:
           whereis go
           ls /usr/bin/go
           go env
+          ls /home/runner/go
+          ls /home/runner/go/bin
       - run: buf generate proto
         working-directory: empty-proto
       - run: |
