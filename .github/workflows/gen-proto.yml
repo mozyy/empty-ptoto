@@ -31,11 +31,23 @@ jobs:
           pwd
           ls
           ls empty-proto
+          go version
 
       - uses: bufbuild/buf-lint-action@v1
         with:
           input: empty-proto/proto
       
+      - uses: actions/setup-go@v3
+          # go install google.golang.org/protobuf/cmd/protoc-gen-go@$latest
+      - run: |
+          go version
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@$latest
+          go install github.com/mozyy/protoc-gen-gorm@$latest
       - run: buf generate proto
         working-directory: empty-proto
-
+      - run: |
+          git status
+          git add .
+          git commit -m 'update proto'
+          git push origin proto
+        working-directory: empty-news
