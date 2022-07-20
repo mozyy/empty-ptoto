@@ -2,7 +2,6 @@ name: gen proto
 
 on:
   push:
-    branches: [main]
 
 jobs:
   build:
@@ -28,6 +27,10 @@ jobs:
           ref: proto
 
       - uses: bufbuild/buf-setup-action@v1
+      - run: |
+          pwd
+          ls
+
       - uses: bufbuild/buf-lint-action@v1
         with:
           input: empty-ptoto/proto
