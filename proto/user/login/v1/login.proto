@@ -32,7 +32,7 @@ message RegisterResponse {
 message LoginRequest {
   // 手机号
   string mobile = 1;
-  // 密码2
+  // 密码
   string password = 2;
   // 短信验证码
   string sms_code = 3;

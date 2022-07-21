@@ -30,15 +30,18 @@ jobs:
           fetch-depth: 0
           ref: proto
 
-      - uses: bufbuild/buf-setup-action@v1
-      - run: echo "`go env GOPATH`/bin" >> $GITHUB_PATH
+      - name: setup buf
+        uses: bufbuild/buf-setup-action@v1
+      - name: add golang bin path
+        run: echo "`go env GOPATH`/bin" >> $GITHUB_PATH
 
-      - uses: bufbuild/buf-lint-action@v1
+      - name: buf lint
+        uses: bufbuild/buf-lint-action@v1
         with:
           input: empty-proto/proto
 
-      - uses: actions/setup-go@v3
-      - run: |
+      - name: setup protoc plugins
+        run: |
           export PROTOC_VERSION=3.20.0
           export PROTOC_ZIP=protoc-${PROTOC_VERSION}-linux-x86_64.zip
 
@@ -57,12 +60,14 @@ jobs:
           go install github.com/mozyy/protoc-gen-gorm@latest
           go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
           go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
-      - run: |
+      - name: buf generate proto
+        run: |
           rm -rf ../empty-news/proto
           rm -rf ../empty-frontend-ng/src/proto
           buf generate proto
         working-directory: empty-proto
-      - run: |
+      - name: push proto to empty-news
+        run: |
           git config user.name github-actions
           git config user.email yy@yyue.dev
           git add . 
@@ -75,8 +80,8 @@ jobs:
             git push origin proto:main
           fi
         working-directory: empty-news
-        # todo: main分去才自动合并到origin
-      - run: |
+      - name: push proto to empty-frontend-ng
+        run: |
           git config user.name github-actions
           git config user.email yy@yyue.dev
           git add .
@@ -88,4 +93,4 @@ jobs:
             git pull origin main:main --no-ff
             git push origin proto:main
           fi
-        working-directory: empty-news
+        working-directory: empty-frontend-ng
